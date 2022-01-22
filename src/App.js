@@ -1,12 +1,16 @@
 import './App.css';
+import { PeliculasPlantilla } from './components/PeliculasPlantilla';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        Hola mundo
+    <>
+      <header>
+        <h1 className="title">Información Películas</h1>
       </header>
-    </div>
+      <main>
+        <PeliculasPlantilla/>
+      </main>
+    </>
   );
 }
 
