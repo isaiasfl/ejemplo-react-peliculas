@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import estilos from "./css/pelicula.module.css";
 
 const Pelicula = ({ title, poster_path, id }) => {
@@ -12,7 +12,7 @@ const Pelicula = ({ title, poster_path, id }) => {
 
   return (
     <li className={estilos.movieCard}>
-      <Link to={`/peliculas/${id}`}>
+      <NavLink to={`/peliculas/${id}`}>
         <img
           width={230}
           height={345}
@@ -21,7 +21,7 @@ const Pelicula = ({ title, poster_path, id }) => {
           className={estilos.movieImage}
         />
         <div>{title}</div>
-      </Link>
+      </NavLink>
     </li>
   );
 };

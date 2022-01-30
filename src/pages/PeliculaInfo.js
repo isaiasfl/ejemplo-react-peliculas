@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from "react";
 import estilo from "./PeliculaInfo.module.css";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import getPeliculaID from "../helpers/getPeliculaID";
+import { Oval } from "react-loader-spinner";
 
 const PeliculaInfo = () => {
   //capturo el parámetro desde <Route path="/peliculas/:peliculaID" en App.js
   const { peliculaID } = useParams();
   const [isCancelled, setIsCancelled] = useState(false);
   const [peliculaConID, setPeliculaConID] = useState(null);
+  const [cargando, setCargando] = useState(true); // estado para el spinner
 
   useEffect(() => {
+    setCargando(true);
     getPeliculaID(peliculaID).then((pelicula) => {
       if (!isCancelled) {
         setPeliculaConID(pelicula);
+        setCargando(false);
       }
     });
     return () => {
       setIsCancelled(true);
     };
   }, [isCancelled, peliculaID]);
+
+  if (cargando) {
+    return (
+      <div className={estilo.spinner}>
+        <Oval />
+      </div>
+    );
+  }
 
   if (!peliculaConID) {
     // esto es para que no se ejecute el return a no ser que tengamos algo traido desde la API
@@ -29,13 +41,15 @@ const PeliculaInfo = () => {
 
   return (
     <div className={estilo.detalle}>
-      <img
-        className={`${estilo.columnas} ${estilo.movieImage}`}
-        src={urlImagenInfo}
-        alt={peliculaConID.original_title}
-        width={230}
-        height={345}
-      />
+      <NavLink to="/">
+        <img
+          className={`${estilo.columnas} ${estilo.movieImage}`}
+          src={urlImagenInfo}
+          alt={peliculaConID.original_title}
+          width={230}
+          height={345}
+        />
+      </NavLink>
       <div className={estilo.columnas}>
         <p>ID: {peliculaID}</p>
         <p> Titulo Original: {peliculaConID.original_title}</p>
